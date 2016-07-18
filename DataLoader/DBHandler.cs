@@ -38,19 +38,19 @@ namespace DataLoader
                             cmd.Parameters.Add("@SortName", SqlDbType.VarChar).Value = row[9];
                             cmd.Parameters.Add("@Cur", SqlDbType.VarChar).Value = row[10];
 
-                            if (!string.IsNullOrWhiteSpace(row[11]))
+                            if (!string.IsNullOrEmpty(row[11]))
                             {
                                 decimal amt = decimal.Parse(row[11]);
                                 cmd.Parameters.Add("@Amount", SqlDbType.Decimal).Value = amt;//""
                             }
 
-                            if (!string.IsNullOrWhiteSpace(row[12]))
+                            if (!string.IsNullOrEmpty(row[12]))
                             {
                                 decimal holdAmt = decimal.Parse(row[12]);
                                 cmd.Parameters.Add("@HoldAmt", SqlDbType.Decimal).Value = row[12];
                             }
 
-                            if (!string.IsNullOrWhiteSpace(row[13]))
+                            if (!string.IsNullOrEmpty(row[13]))
                             {
                                 decimal amtApplied = decimal.Parse(row[13]);
                                 cmd.Parameters.Add("@AmountApplied", SqlDbType.Decimal).Value = amtApplied;

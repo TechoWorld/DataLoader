@@ -22,7 +22,7 @@ namespace DataLoader
          
         internal void LoadFiles(string dirPath)    //Load all files from a directory
         {
-            if (!string.IsNullOrWhiteSpace(dirPath))
+            if (!string.IsNullOrEmpty(dirPath))
             {
                 string[] filePaths = Directory.GetFiles(dirPath);
                 if (filePaths == null | filePaths.Length == 0)
@@ -76,7 +76,7 @@ namespace DataLoader
                         catch(Exception exMsg)
                         {
                             Util.PrintMessage(string.Format("While processing file {0} is giving error: {1}", filePath, exMsg.Message));
-                            string failDirPath = Path.Combine(ConfigurationManager.AppSettings["DestinationDirectoryPath"], "Fail", Util.GetDate());
+                            string failDirPath = Util.CombinePath(ConfigurationManager.AppSettings["DestinationDirectoryPath"], "Fail", Util.GetDate());
                             fileHandler.MoveFile(filePath, failDirPath);
                         }
                     }
@@ -102,7 +102,7 @@ namespace DataLoader
             for (int i = 0; i < fullData.Length; ++i)
             {
 
-                if (!string.IsNullOrWhiteSpace(fullData[i]))
+                if (!string.IsNullOrEmpty(fullData[i]))
                 {
 
                     if (fullData[i].Contains("End of Report"))

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+﻿using System.IO;
 
 
 namespace DataLoader
@@ -21,7 +16,7 @@ namespace DataLoader
 
             string appendName=File.Exists(Path.Combine(destinationDirPath,fileInfo.Name))? Util.GetDateWithTimestamp() : string.Empty;
 
-            string temppath = Path.Combine(destinationDirPath, (string.IsNullOrWhiteSpace(appendName)? fileInfo.Name : GetDestFileName(fileInfo, appendName)));
+            string temppath = Path.Combine(destinationDirPath, (string.IsNullOrEmpty(appendName)? fileInfo.Name : GetDestFileName(fileInfo, appendName)));
             fileInfo.MoveTo(temppath);
             
         }

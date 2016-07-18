@@ -1,16 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataLoader
 {
     class Util
     {
-        public static void PrintMessage(string message, bool addTimeStamp=true)
+        public static string CombinePath(params string[] paths)
+        {
+            string finalPath = "";
+            if (paths != null)
+            {
+                 for (int i = 0; i < paths.Length; ++i)
+                {
+                    finalPath = i == 0 ? paths[i] : Path.Combine(finalPath, paths[i]);
+                }
+            }
+            return finalPath;
+        }
+     public static void PrintMessage(string message, bool addTimeStamp=true)
         {
             string finalMsg = addTimeStamp ? string.Format("{0} : {1}", Util.GetDateWithTimestamp(), message) : message;
             System.Console.WriteLine(finalMsg);

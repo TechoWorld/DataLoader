@@ -1,8 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.IO;
-using System.Windows;
-using System.Windows.Forms;
+﻿using System.Configuration;
 
 namespace DataLoader
 {
