@@ -12,15 +12,14 @@ namespace DataLoader
         static void Main(string[] args)
         {
             Program program = new Program();
-            PaymentVoucherProcessor paymentVoucherProcessor = new PaymentVoucherProcessor();
 
             Util.PrintMessage("******************************************************************************", false);
             Util.PrintMessage("Starting file loader program ...");
             string sourceDirPath = ConfigurationManager.AppSettings["SourceDirectoryPath"];
            
-            FixedWidthTextProcessor prnFileProcessor = new FixedWidthTextProcessor();
-
-            paymentVoucherProcessor.LoadFiles(sourceDirPath);
+            PRNFileProcessor prnFileProcessor = new PRNFileProcessor();
+          
+            prnFileProcessor.LoadFiles(sourceDirPath);
             Util.PrintMessage("Stopping file loader program....");
             Util.PrintMessage("******************************************************************************", false);
            // Console.ReadKey();

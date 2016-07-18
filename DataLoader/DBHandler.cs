@@ -8,7 +8,7 @@ namespace DataLoader
 {
     class DBHandler
     {
-        internal void InsertIntoAPPaymentVouchers(IList<string[]> rows)
+        internal void InsertIntoAPPaymentVouchers(List<string[]> rows)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
             {

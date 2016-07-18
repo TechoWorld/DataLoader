@@ -63,9 +63,7 @@
   <ItemGroup>
     <Compile Include="DBHandler.cs" />
     <Compile Include="FileHandler.cs" />
-    <Compile Include="IDataProcessor.cs" />
-    <Compile Include="PaymentVoucherProcessor.cs" />
-    <Compile Include="FixedWidthTextProcessor.cs" />
+    <Compile Include="PRNFileProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />

@@ -10,7 +10,7 @@ namespace DataLoader
 {
     class FileHandler
     {
-        internal static void MoveFile(string sourceFilePath, string destinationDirPath)
+        internal void MoveFile(string sourceFilePath, string destinationDirPath)
         {
             FileInfo fileInfo = new FileInfo(sourceFilePath);
             if (!fileInfo.Exists)
@@ -26,7 +26,7 @@ namespace DataLoader
             
         }
 
-        private static string GetDestFileName(FileInfo srcFileInfo,string appendName)
+        internal string GetDestFileName(FileInfo srcFileInfo,string appendName)
         {
             return string.Format("{0}-{1}{2}", srcFileInfo.Name.Replace(srcFileInfo.Extension, string.Empty),appendName,srcFileInfo.Extension);
         }
