@@ -82,11 +82,13 @@ namespace DataLoader
                     }
                     try
                     {
+                        Util.PrintMessage("Starting execution of SP_APDuplicateVouchersDaily ...");
                         dbHandler.CallSPAPDuplicateVouchersDaily();
+                        Util.PrintMessage("Completed execution of SP_APDuplicateVouchersDaily ...");
                     }
                     catch(Exception ex)
                     {
-                        Util.PrintMessage(ex.Message);
+                        Util.PrintMessage("Error occurred while executing - SP_APDuplicateVouchersDaily : " + ex.Message);
                     }
                 }
             }
