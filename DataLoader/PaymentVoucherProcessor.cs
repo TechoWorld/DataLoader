@@ -68,11 +68,12 @@ namespace DataLoader
 
                     try
                     {
+                        Util.PrintMessage("Starting execution of SP_APDuplicateVouchersDaily ...");
                         dbHandler.CallSPAPDuplicateVouchersDaily();
                     }
                     catch (Exception ex)
                     {
-                        Util.PrintMessage(ex.Message);
+                        Util.PrintMessage("Error occurred in SP_APDuplicateVouchersDaily : " + ex.Message);
                     }
                 }
             }

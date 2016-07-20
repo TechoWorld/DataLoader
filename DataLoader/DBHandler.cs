@@ -83,15 +83,19 @@ namespace DataLoader
 
         internal void CallSPAPDuplicateVouchersDaily()
         {
-            CallNonQuerySP("SP_APDuplicateVouchersDaily");
+            
+            CallNonQuerySP("SP_APDuplicateVouchersDaily", 60);
+            
         }
 
-        internal void CallNonQuerySP(string sprocName)
+        internal void CallNonQuerySP(string sprocName, int commandTimeOut = 30)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
+            
             {
                 using (SqlCommand cmd = new SqlCommand(sprocName, con))
                 {
+                    cmd.CommandTimeout = commandTimeOut;
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     cmd.ExecuteNonQuery();
