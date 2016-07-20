@@ -67,7 +67,7 @@ namespace DataLoader
                                 Util.PrintMessage("Starting to save data into DB ...");
                                 SaveDataIntoDB(singleFileFullData.ToArray());
                                 Util.PrintMessage("Completed data saving into DB ...");
-                                Util.PrintMessage("Starting file movement ...");
+                                Util.PrintMessage("Starting file movement ..."); 
                                 fileHandler.MoveFile(filePath, Path.Combine(ConfigurationManager.AppSettings["DestinationDirectoryPath"],Util.GetDate()));
                                 Util.PrintMessage("Ended file movement ...");
                                 Util.PrintMessage("******************************************************************************", false);
