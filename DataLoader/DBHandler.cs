@@ -81,10 +81,11 @@ namespace DataLoader
 
         }
 
-        internal void CallSPAPDuplicateVouchersDaily()
+        internal int CallSPAPDuplicateVouchersDaily()
         {
-            
+            int maxConflictno = GetMaxPaymentVoucherConflictID();
             CallNonQuerySP("SP_APDuplicateVouchersDaily", 60);
+            return maxConflictno;
             
         }
 
@@ -102,6 +103,61 @@ namespace DataLoader
                 }
             }
         }
+
+
+        internal int GetMaxPaymentVoucherConflictID()
+        {
+            string query = "select MAX(VoucherConflictId) from  AP_PaymentVoucherConflicts";
+            DataTable dt = ExecuteQuery(query);
+            return dt != null && dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][0]) : 0;
+        }
+
+        internal DataTable ExecuteQuery(string query)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    using (SqlDataAdapter adp = new SqlDataAdapter())
+                    {
+                        adp.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
+
+        public DataTable GetPaymentVoucherConflictData(int voucherId)
+        {
+            string query = string.Format("select * from AP_PaymentVouchers where Voucher_ID>{0}", voucherId);
+            return ExecuteQuery(query);
+
+            //System.Console.WriteLine(dt.Rows.Count);
+            //if(dt.Rows.Count>0)
+            //{
+            //    foreach (DataRow row in dt.Rows)
+            //    {
+            //        Console.WriteLine();
+            //        for (int x = 0; x < dt.Columns.Count; x++)
+            //        {
+            //            Console.Write(row[x].ToString() + " ");
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    Util.PrintMessage("Table is empty!!");
+            //}
+
+
+
+        }
+
+
+       
 
     }
 }

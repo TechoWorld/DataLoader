@@ -9,6 +9,122 @@ namespace DataLoader
 
     class PRNFileProcessor
     {
+        class PaymentConflictVoucherMailHelper
+        {
+
+            internal static string ConvertDT2HTMLString2(DataTable dt)
+            {
+                string tab = "\t";
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.AppendLine("<html>");
+                sb.AppendLine(tab + "<body>");
+                sb.AppendLine(tab + tab + "<table>");
+                sb.AppendLine("<table  style='width: 1000px;font-family: Arial;font-size: 13px;text-align: justify;border: thin solid #56150C;margin-left: 20px;margin-top: 20px; color: #56150C;table-layout:auto; border-collapse: collapse; empty-cells: show;'>");
+                sb.AppendLine("<thead><tr line-height:60px; align='center'>");
+                sb.AppendLine("<th colspan='1' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Business</th>");
+                sb.AppendLine("<th colspan='1' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Country</th>");
+                sb.AppendLine("<th colspan='3' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Actual (Invoiced)</th>");
+                sb.AppendLine("<th colspan='3' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Pending (Orders)</th>");
+                sb.AppendLine("<th colspan='4' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Total (Actual+Pending)</th>");
+                sb.AppendLine("<th colspan='4' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Plan  </th>");
+                sb.AppendLine("<th colspan='4' style=' color:Black;background-color:#FFFF00;border-color:Black;border: thin solid ;font-weight:bold'>Previous Year  </th>");
+
+
+                sb.AppendLine("</tr><thead>");
+
+
+                sb.AppendLine("<thead><tr align='center'>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>LPM</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'></th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Qty</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Sales</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Qty</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Sales</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Qty</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Sales</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP%</th>");
+
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Qty</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Sales</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>TP%</th>");
+
+
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid; border-color:Black;font-weight:bold'>Qty</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid; border-color:Black;font-weight:bold'>Sales</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid; border-color:Black;font-weight:bold'>TP</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid; border-color:Black;font-weight:bold'>TP%</th>");
+
+                sb.AppendLine("</tr ><thead>");
+
+                //Third Header Line
+
+                sb.AppendLine("<thead><tr align='center'>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'></th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'></th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>M2'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>M2'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>M2'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>%</th>");
+
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>M2'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>%</th>");
+
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>M2'000s</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>US$'000</th>");
+                sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>%</th>");
+
+
+                sb.AppendLine("</tr ><thead>");
+                // headers.
+                sb.Append(tab + tab + tab + "<tr>");
+
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    sb.AppendFormat("<td>{0}</td>", dc.ColumnName);
+                }
+
+                sb.AppendLine("</tr>");
+
+                // data rows
+                foreach (DataRow dr in dt.Rows)
+                {
+                    sb.Append(tab + tab + tab + "<tr>");
+
+                    foreach (DataColumn dc in dt.Columns)
+                    {
+                        string cellValue = dr[dc] != null ? dr[dc].ToString() : "";
+                        sb.AppendFormat("<td>{0}</td>", cellValue);
+                    }
+
+                    sb.AppendLine("</tr>");
+                }
+
+                sb.AppendLine(tab + tab + "</table>");
+                sb.AppendLine(tab + "</body>");
+                sb.AppendLine("</html>");
+
+                return sb.ToString();
+            }
+
+        }
+
+
+
         DBHandler dbHandler;
         List<string> fixedColLength;
         FileHandler fileHandler;
@@ -58,7 +174,7 @@ namespace DataLoader
                             IList<string> singleFileFullData = File.ReadAllLines(filePath);
                             if (singleFileFullData == null || singleFileFullData.Count == 0)
                             {
-                                Util.PrintMessage("Empty File");
+                                Util.PrintMessage("Empty File"); 
                             }
                             else
                             {
@@ -83,8 +199,9 @@ namespace DataLoader
                     try
                     {
                         Util.PrintMessage("Starting execution of SP_APDuplicateVouchersDaily ...");
-                        dbHandler.CallSPAPDuplicateVouchersDaily();
+                        int maxVoucherId=dbHandler.CallSPAPDuplicateVouchersDaily();
                         Util.PrintMessage("Completed execution of SP_APDuplicateVouchersDaily ...");
+
                     }
                     catch(Exception ex)
                     {
@@ -167,5 +284,7 @@ namespace DataLoader
             }
             return colVals;
         }
+
+     
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace DataLoader
 {
@@ -12,13 +13,14 @@ namespace DataLoader
             Util.PrintMessage("******************************************************************************", false);
             Util.PrintMessage("Starting file loader program ...");
             string sourceDirPath = ConfigurationManager.AppSettings["SourceDirectoryPath"];
-           
+
             PRNFileProcessor prnFileProcessor = new PRNFileProcessor();
-          
+
             prnFileProcessor.LoadFiles(sourceDirPath);
             Util.PrintMessage("Stopping file loader program....");
             Util.PrintMessage("******************************************************************************", false);
-           // Console.ReadKey();
+
+           Console.ReadKey();
 
         }
 
