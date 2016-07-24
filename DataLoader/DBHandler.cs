@@ -107,9 +107,11 @@ namespace DataLoader
 
         internal int GetMaxPaymentVoucherConflictID()
         {
+            
             string query = "select MAX(VoucherConflictId) from  AP_PaymentVoucherConflicts";
             DataTable dt = ExecuteQuery(query);
             return dt != null && dt.Rows.Count > 0 ? Convert.ToInt32(dt.Rows[0][0]) : 0;
+            //return 0;
         }
 
         internal DataTable ExecuteQuery(string query)
@@ -121,8 +123,9 @@ namespace DataLoader
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     cmd.CommandType = CommandType.Text;
-                    using (SqlDataAdapter adp = new SqlDataAdapter())
+                    using (SqlDataAdapter adp = new SqlDataAdapter(cmd))
                     {
+                        //adp.SelectCommand = cmd;
                         adp.Fill(dt);
                     }
                 }
@@ -132,7 +135,7 @@ namespace DataLoader
 
         public DataTable GetPaymentVoucherConflictData(int voucherId)
         {
-            string query = string.Format("select * from AP_PaymentVouchers where Voucher_ID>{0}", voucherId);
+            string query = string.Format("select DupSeq, VoucherDate, Reference, Invoice,Currency, Amount,Country_Code,Supplier, SupplierName, EffDate, ConflictType  from AP_PaymentVoucherConflicts where VoucherConflictId>{0}", voucherId);
             return ExecuteQuery(query);
 
             //System.Console.WriteLine(dt.Rows.Count);

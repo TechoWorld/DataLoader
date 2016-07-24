@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="DBHandler.cs" />
     <Compile Include="FileHandler.cs" />
-    <Compile Include="MailSender.cs" />
+    <Compile Include="MailSystem.cs" />
     <Compile Include="PRNFileProcessor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

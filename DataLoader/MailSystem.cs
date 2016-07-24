@@ -18,7 +18,7 @@ namespace DataLoader
 
         public MailSystem()
         {
-            MailMessage mailMessage = new MailMessage();
+            mailMessage = new MailMessage();
             smtpClient = new SmtpClient();
             dt = new DataTable();
         }
@@ -239,38 +239,38 @@ namespace DataLoader
         public void  SendEmail(string emailTo, string subject, string msgBody)
         {
             
-            //try
-            //{
+            try
+            {
                 
-                //mailMessage.From = new MailAddress("info@aranyaproject.com");
-                //mailMessage.To.Add(EmailTo);
-                //mailMessage.Subject = subject;
-               
-                //mailMessage.Body = msgBody.Replace("\n", "<br> ");
-                DataTable dt = GetDatafromDataTable();
-                string str = ConvertDT2HTMLString2(dt);
-                Console.WriteLine(str);
-                string path=@"C:\Users\SAHIL\Desktop\Txt Files\1.txt";
-                using (StreamWriter sw = File.CreateText(path))
-                {
-                    sw.WriteLine(str);
-                  
-                }	
+                mailMessage.From = new MailAddress("info@aranyaproject.com");
+                mailMessage.To.Add(emailTo);
+                mailMessage.Subject = subject;
+
+                mailMessage.Body = msgBody;
+                //Console.WriteLine(msgBody);
+                //string path = @"C:\Users\SAHIL\Desktop\Txt Files\1.html";
+                //using (StreamWriter sw = File.CreateText(path))
+                //{
+                //    sw.WriteLine(msgBody);
+
+                //}	
                 mailMessage.IsBodyHtml = true;
 
                 smtpClient.Host = "relay-hosting.secureserver.net";
                 smtpClient.Send(mailMessage);
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
-            //finally
-            //{
-            //    mailMessage = null;
-            //    mailMessage = null;
-            //}
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                mailMessage = null;
+                mailMessage = null;
+            }
         }
 
+
+        
     }
 }

@@ -20,7 +20,7 @@ namespace DataLoader
             Util.PrintMessage("Stopping file loader program....");
             Util.PrintMessage("******************************************************************************", false);
 
-           Console.ReadKey();
+           //Console.ReadKey();
 
         }
 
