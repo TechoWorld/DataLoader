@@ -3,7 +3,7 @@
 
 namespace DataLoader
 {
-    class FileHandler
+    public class FileHandler
     {
         internal void MoveFile(string sourceFilePath, string destinationDirPath)
         {

@@ -18,24 +18,24 @@ namespace DataLoader
             }
             return finalPath;
         }
-     public static void PrintMessage(string message, bool addTimeStamp=true)
+     public static void PrintMessage(string message, bool addTimeStamp=true,string srcDirPath=null)
         {
             string finalMsg = addTimeStamp ? string.Format("{0} : {1}", Util.GetDateWithTimestamp(), message) : message;
             System.Console.WriteLine(finalMsg);
             LogIntoFile(finalMsg);
         }
 
-        private static void LogIntoFile(string message)
-        {
-            string dirPath = Path.Combine(ConfigurationManager.AppSettings["SourceDirectoryPath"], "log");
-            string logFilePath = Path.Combine(dirPath, string.Format("log-{0}.txt", GetDate()));
-            
-            if (!Directory.Exists(dirPath))
-                Directory.CreateDirectory(dirPath);
+     private static void LogIntoFile(string message)
+     {
+         string dirPath = Path.Combine(ConfigurationManager.AppSettings["PaymentSourceDirectoryPath"], "log");
+         string logFilePath = Path.Combine(dirPath, string.Format("log-{0}.txt", GetDate()));
 
-            File.AppendAllText(logFilePath, Environment.NewLine + message);
-            
-        }
+         if (!Directory.Exists(dirPath))
+             Directory.CreateDirectory(dirPath);
+
+         File.AppendAllText(logFilePath, Environment.NewLine + message);
+
+     }
 
         internal static string GetDate()
         {

@@ -10,7 +10,7 @@ using System.IO;
 
 namespace DataLoader
 {
-    class MailSystem
+    public class MailSystem
     {
         MailMessage mailMessage;
         SmtpClient smtpClient;
@@ -256,7 +256,7 @@ namespace DataLoader
                 //}	
                 mailMessage.IsBodyHtml = true;
 
-                smtpClient.Host = "relay-hosting.secureserver.net";
+                smtpClient.Host = "SMTP-CUL.averydennison.net";
                 smtpClient.Send(mailMessage);
             }
             catch (Exception ex)
@@ -270,7 +270,46 @@ namespace DataLoader
             }
         }
 
+        public string ConvertDT2HTMLString(DataTable dt)
+        {
+            string tab = "\t";
 
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("<html>");
+            sb.AppendLine(tab + "<body>");
+            sb.AppendLine(tab + tab + "<table>");
+            sb.AppendLine(tab + tab + tab + "<thead>");
+            sb.AppendLine(tab + tab + tab + tab + "<tr>");
+
+            foreach (DataColumn dc in dt.Columns)
+            {
+
+                sb.AppendFormat("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>{0}</th>", dc.ColumnName);
+            }
+
+            sb.AppendLine(tab + tab + tab + "</thead>");
+            sb.AppendLine(tab + tab + tab + tab + "</tr>");
+
+            // data rows
+            foreach (DataRow dr in dt.Rows)
+            {
+                sb.Append(tab + tab + tab + "<tr>");
+
+                foreach (DataColumn dc in dt.Columns)
+                {
+                    string cellValue = dr[dc] != null ? dr[dc].ToString() : "";
+                    sb.AppendFormat("<td>{0}</td>", cellValue);
+                }
+
+                sb.AppendLine("</tr>");
+            }
+
+            sb.AppendLine(tab + tab + "</table>");
+            sb.AppendLine(tab + "</body>");
+            sb.AppendLine("</html>");
+
+            return sb.ToString();
+        }
         
     }
 }

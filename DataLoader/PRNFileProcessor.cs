@@ -9,7 +9,7 @@ using System.Text;
 namespace DataLoader
 {
 
-    class PRNFileProcessor
+    public class PRNFileProcessor
     {
         MailSystem mailSystem;
         class PaymentConflictVoucherMailHelper
@@ -20,27 +20,12 @@ namespace DataLoader
                 string tab = "\t";
 
                 StringBuilder sb = new StringBuilder();
-                // , , , ,, ,,, , , ConflictType 
                 sb.AppendLine("<html>");
                 sb.AppendLine(tab + "<body>");
                 sb.AppendLine(tab + tab + "<table>");
                 sb.AppendLine(tab + tab + tab + "<thead>");
                 sb.AppendLine(tab + tab + tab + tab + "<tr>");
                
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>DupSeq</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>VoucherDate</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Reference</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Invoice</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Currency</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Amount</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Country_Code</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>Supplier</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>SupplierName</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>EffDate</th>");
-                //sb.AppendLine("<th style=' color:Black;background-color:White;border: thin solid ;border-color:Black;font-weight:bold'>ConflictType</th>");
-
-
-
                 foreach (DataColumn dc in dt.Columns)
                 {
 
