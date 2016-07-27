@@ -36,8 +36,22 @@ namespace DataLoader
             {
                 if (dt != null && dt.Rows.Count > 0)
                 {
+                    IList<string> emailTo =new List<string>();
+                    IList<string> emailToCC= new List<string>();
                     Util.PrintMessage("Preparing to send emails");
-                    mailSystem.SendEmail("niharika.aranya@gmail.com", "Details of Today's Duplicate Vouchers", mailSystem.ConvertDT2HTMLString(dt));
+                    DataTable emailDt=dbHandler.GetEmailId("APDupPayment");
+                    foreach(DataRow row in emailDt.Rows)
+                    {
+                        if (row["ToCC"].Equals("To"))
+                        {
+                            emailTo.Add(row["EmailId"].ToString());
+                        }
+                        else
+                        {
+                            emailToCC.Add(row["EmailId"].ToString());
+                        }
+                    }
+                    mailSystem.SendEmail(emailTo,emailToCC, "Details of Today's Duplicate Vouchers", mailSystem.ConvertDT2HTMLString(dt));
                     Util.PrintMessage("Emails Send!!!!");
                 }
             }
@@ -50,16 +64,5 @@ namespace DataLoader
         {
             dbHandler.InsertIntoAPPaymentVouchers(allLinesColValues);
         }
-
-        //public override void LogIntoFile(string message)
-        //{
-        //    string dirPath = Path.Combine(ConfigurationManager.AppSettings["PaymentSourceDirectoryPath"], "log");
-        //    string logFilePath = Path.Combine(dirPath, string.Format("log-{0}.txt", Util.GetDate()));
-
-        //    if (!Directory.Exists(dirPath))
-        //        Directory.CreateDirectory(dirPath);
-
-        //    File.AppendAllText(logFilePath, Environment.NewLine + message);
-        //}
     }
 }

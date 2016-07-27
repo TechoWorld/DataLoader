@@ -6,6 +6,7 @@ namespace DataLoader
 {
     class Util
     {
+        public static EnvironmentInfo EnvironmentInfo{get;set;}
         public static string CombinePath(params string[] paths)
         {
             string finalPath = "";
@@ -27,7 +28,7 @@ namespace DataLoader
 
      private static void LogIntoFile(string message)
      {
-         string dirPath = Path.Combine(ConfigurationManager.AppSettings["PaymentSourceDirectoryPath"], "log");
+         string dirPath = Path.Combine(EnvironmentInfo.SourceDirPath, "log");
          string logFilePath = Path.Combine(dirPath, string.Format("log-{0}.txt", GetDate()));
 
          if (!Directory.Exists(dirPath))

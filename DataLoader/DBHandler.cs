@@ -32,7 +32,7 @@ namespace DataLoader
                             cmd.Parameters.Add("@Region", SqlDbType.VarChar).Value = row[4];
                             cmd.Parameters.Add("@County", SqlDbType.VarChar).Value = row[5];
                             cmd.Parameters.Add("@Customer", SqlDbType.VarChar).Value = row[6];
-                            cmd.Parameters.Add("@Customer Name", SqlDbType.VarChar).Value = row[7];
+                            cmd.Parameters.Add("@CustomerName", SqlDbType.VarChar).Value = row[7];
                             cmd.Parameters.Add("@SO", SqlDbType.VarChar).Value = row[8];
                             cmd.Parameters.Add("@LN", SqlDbType.VarChar).Value = row[9];
                             cmd.Parameters.Add("@ItemNumber", SqlDbType.VarChar).Value = row[10];
@@ -102,8 +102,8 @@ namespace DataLoader
                             }
                             if (!string.IsNullOrEmpty(row[34]))
                             {
-                                decimal Mput = decimal.Parse(row[34]);
-                                cmd.Parameters.Add("@Mput", SqlDbType.Decimal).Value = Mput;
+                                //decimal Mput = decimal.Parse(row[34])/100;
+                                cmd.Parameters.Add("@Mput", SqlDbType.Decimal).Value = null;
                             }
                             if (!string.IsNullOrEmpty(row[35]))
                             {
@@ -153,7 +153,7 @@ namespace DataLoader
                             cmd.Parameters.Add("@EntryBy", SqlDbType.VarChar).Value = row[55];
                             cmd.Parameters.Add("@Remark", SqlDbType.VarChar).Value = row[56];
                             cmd.Parameters.Add("@VAT", SqlDbType.VarChar).Value = row[57];
-                            cmd.Parameters.Add("@Country", SqlDbType.VarChar).Value = row[58];
+                            //cmd.Parameters.Add("@Country", SqlDbType.VarChar).Value = row[58];
                             //cmd.Parameters.Add("@Product", SqlDbType.VarChar).Value = row[59];
                             //cmd.Parameters.Add("@Business", SqlDbType.VarChar).Value = row[60];
                             //cmd.Parameters.Add("@Process_Status", SqlDbType.VarChar).Value = row[61];
@@ -205,6 +205,7 @@ namespace DataLoader
         }
         internal void InsertIntoAPPaymentVouchers(IList<string[]> rows)
         {
+            
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("InsertAP_PaymentVoucherExcell", con))
@@ -335,6 +336,12 @@ namespace DataLoader
             return ExecuteQuery(query);
         }
 
+        internal DataTable GetEmailId(string groupName)
+        {
+            string query = string.Format("select GD.CommGroupDtlId,GD.CommGroupId,GD.ToCC,GD.EmailId,Phone,CommGroupName from  CommGroupDetails as GD left join CommGroupMaster as GM on gd.CommGroupId=GM.CommGroupId where GM.CommGroupName='{0}'",groupName);
+            DataTable emailDataTable = ExecuteQuery(query);
+            return emailDataTable;
+        }
 
        
 

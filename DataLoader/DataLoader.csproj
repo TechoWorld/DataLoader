@@ -63,6 +63,7 @@
     <Compile Include="AseanSalesProcessor.cs" />
     <Compile Include="DataProcessor.cs" />
     <Compile Include="DBHandler.cs" />
+    <Compile Include="EnvironmentInfo.cs" />
     <Compile Include="FileHandler.cs" />
     <Compile Include="FixedWidthFileProcessor.cs" />
     <Compile Include="IDataProcessor.cs" />

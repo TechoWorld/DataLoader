@@ -27,17 +27,17 @@ namespace DataLoader
             DataTable dt = null;
 
             //Needs to pass month in all the procedures--fiscal month dont know.
-            //try
-            //{
-            //    Util.PrintMessage("Starting execution of GetFiscalMonth()  ...");
-            //    dbHandler.CallNonQuerySP("GetFiscalMonth",60);
-            //    Util.PrintMessage("Completed execution of GetFiscalMonth()  ...");
-           
-            //}
-            //catch (Exception ex)
-            //{
-            //    Util.PrintMessage("Error occurred while executing GetFiscalMonth() . " + ex.Message);
-            //}
+            try
+            {
+                Util.PrintMessage("Starting execution of GetFiscalMonth()  ...");
+               // dbHandler.CallNonQuerySP("GetFiscalMonth",60);
+                Util.PrintMessage("Completed execution of GetFiscalMonth()  ...");
+
+            }
+            catch (Exception ex)
+            {
+                Util.PrintMessage("Error occurred while executing GetFiscalMonth() . " + ex.Message);
+            }
 
 
             //try

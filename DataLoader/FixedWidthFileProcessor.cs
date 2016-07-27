@@ -102,24 +102,22 @@ namespace DataLoader
                     if (fullData[i].Contains("End of Report"))
                         break;
 
-                    if (i == 60)
-                        i = 60;
-
                     int separatorIdx = fullData[i].IndexOf(separator);
                     if (separatorIdx == 0 || separatorIdx == 1) //To consider both KE001 & FFKE001  
                     {
                         i += 5;
                         if (fixedColLength.Count == 0 && fullData.Length >= (i - 1))
                         {
-                            fixedColLength.AddRange(fullData[i - 1].Split(' '));
+                            //fixedColLength.AddRange(fullData[i - 1].Split(' '));
+                            fixedColLength.AddRange(fullData[i - 1].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
 
                         }
                     }
                     if (fullData.Length <= i)
                         break;
-                    extractedData.Add(fullData[i]);
 
-                    //index = index + 1;
+                    if (!string.IsNullOrEmpty(fullData[i].Trim()))
+                        extractedData.Add(fullData[i]);
                 }
             }
             return extractedData;
@@ -144,16 +142,6 @@ namespace DataLoader
             }
 
             return colVals;
-            //if (colVals != null)
-            //{
-            //    return colVals;
-            //}
-            //else
-            //{
-            //    Util.PrintMessage("Data of file is blank so not entering in database");
-
-            //}
-            //break;
         }
 
     }

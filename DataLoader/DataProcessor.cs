@@ -26,7 +26,6 @@ namespace DataLoader
         protected abstract void SaveDataIntoDB(IList<string[]> allLinesColValues);
         protected abstract void ProcessAfterSaveIntoDB();
         public abstract void ProcessData();
-        //public abstract void LogIntoFile(string message);
 
         #endregion End abstract method
 
