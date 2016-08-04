@@ -27,9 +27,11 @@ namespace DataLoader
         protected abstract void ProcessAfterSaveIntoDB();
         public abstract void ProcessData();
 
+        protected abstract IList<string[]> ParseFile(string filePath);
+
         #endregion End abstract method
 
-        internal void LoadFiles(string sourceDirPath, string destinationDirPath)    //Load all files from a directory
+        internal void LoadFiles(string sourceDirPath, string destinationDirPath,string category)    //Load all files from a directory
         {
             if (!string.IsNullOrEmpty(sourceDirPath))
             {
@@ -51,7 +53,7 @@ namespace DataLoader
                             Util.PrintMessage(string.Format("File Name - {0}", filePath));
                             Util.PrintMessage("Starting file reading...");
 
-                            SaveDataIntoDB(fixedWidthFileProcessor.ParseFile(filePath));
+                            SaveDataIntoDB(ParseFile(filePath));
                         }
                         catch (Exception exMsg)
                         {

@@ -8,7 +8,7 @@ namespace DataLoader
         
         static void Main(string[] args)
         {
-            args = new string[] { "Payment" };
+            args = new string[] { "AseanSales" };
             Program program = new Program();
             Util.EnvironmentInfo = GetEnvironemtInfo(args[0]);
             Util.PrintMessage("******************************************************************************", false);
@@ -28,7 +28,7 @@ namespace DataLoader
             Util.PrintMessage("Stopping file loader program....");
             Util.PrintMessage("******************************************************************************", false);
 
-           Console.ReadKey();
+           //Console.ReadKey();
 
         }
         private static IDataProcessor GetProcessor(string arg)

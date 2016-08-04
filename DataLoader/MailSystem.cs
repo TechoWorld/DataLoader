@@ -41,7 +41,7 @@ namespace DataLoader
                 mailMessage.Body = msgBody;
                 mailMessage.IsBodyHtml = true;
 
-                smtpClient.Host = "SMTP-CUL.averydennison.net";
+                smtpClient.Host = ConfigurationManager.AppSettings["EmailServerName"];
                 smtpClient.Send(mailMessage);
             }
             catch (Exception ex)

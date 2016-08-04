@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.IO;
-using System.Linq;
-using System.Configuration;
 
 namespace DataLoader
 {
@@ -14,7 +11,7 @@ namespace DataLoader
         {
             string sourceDirPath = ConfigurationManager.AppSettings["PaymentSourceDirectoryPath"];
             string destinationDirPath = ConfigurationManager.AppSettings["PaymentDestinationDirectoryPath"];
-            LoadFiles(sourceDirPath, destinationDirPath);
+            LoadFiles(sourceDirPath, destinationDirPath,"Payment");
         }
 
         protected override void ProcessAfterSaveIntoDB()
@@ -38,7 +35,7 @@ namespace DataLoader
                 {
                     IList<string> emailTo =new List<string>();
                     IList<string> emailToCC= new List<string>();
-                    Util.PrintMessage("Preparing to send emails");
+                   // Util.PrintMessage("Preparing to send emails");
                     DataTable emailDt=dbHandler.GetEmailId("APDupPayment");
                     foreach(DataRow row in emailDt.Rows)
                     {
@@ -51,8 +48,8 @@ namespace DataLoader
                             emailToCC.Add(row["EmailId"].ToString());
                         }
                     }
-                    mailSystem.SendEmail(emailTo,emailToCC, "Details of Today's Duplicate Vouchers", mailSystem.ConvertDT2HTMLString(dt));
-                    Util.PrintMessage("Emails Send!!!!");
+                   mailSystem.SendEmail(emailTo,emailToCC, "Details of Today's Duplicate Vouchers", mailSystem.ConvertDT2HTMLString(dt));
+                   Util.PrintMessage("Emails Send!!!!");
                 }
             }
             catch (Exception ex)
@@ -63,6 +60,11 @@ namespace DataLoader
         protected override void SaveDataIntoDB(IList<string[]> allLinesColValues)
         {
             dbHandler.InsertIntoAPPaymentVouchers(allLinesColValues);
+        }
+
+        protected override IList<string[]> ParseFile(string filePath)
+        {
+            return fixedWidthFileProcessor.ParseFile(filePath, 5, 5);
         }
     }
 }

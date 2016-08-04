@@ -17,44 +17,14 @@ namespace DataLoader
             fileHandler = new FileHandler();
             fixedColLength = new List<string>();
         }
-        internal IList<string[]> ParseFile(string filePath)    //Load all files from a directory
+        internal IList<string[]> ParseFile(string filePath,int firstIterationIncrement, int consuctiveIterationIncrement)    //Load all files from a directory
         {
             IList<string[]> allLinesColValues = new List<string[]>();//Filtered and ParsedColVlaues data that needs to be entered into db--each line
             try
             {
-                
-                //Extracting separator code from filename(eg. SG001,KE001.....)
-                string[] parts = filePath.Split('.');
-                string separator = "";
-                for (int i = 0; i < parts.Length; i++)
-                {
-                    if (parts[i].Contains("-"))
-                    {
-                        string[] parts2 = parts[i].Split('-');
-                        separator = parts2[1];
-                        break;
-                        //Console.WriteLine("Separator is: " +separator);
-                    }
-
-                    else
-                    {
-                        int j = 0;
-                        string[] parts3 = parts[i].Split('\\');
-                        for ( j = 0; j < parts3.Length-1; j++) ;
-                        separator = parts3[j];
-                        break;
-                    }
-                }
-
-                //for (int i = 0; i < parts.Length; i++)
-                //{
-                //    if (parts[i].Contains("."))
-                //    {
-                //        string[] parts2 = parts[i].Split('.');
-                //        separator = parts2[0];
-                //        //Console.WriteLine("Separator is: " +separator);
-                //    }
-                //}
+                FileInfo fileInfo = new FileInfo(filePath);
+                string[] nameParts = fileInfo.Name.Split('-');
+                string separator = nameParts[nameParts.Length - 1].Split('.')[0];
 
                 IList<string> singleFileFullData = File.ReadAllLines(filePath);//singleFileFullData is
                 if (singleFileFullData == null || singleFileFullData.Count == 0)
@@ -65,7 +35,7 @@ namespace DataLoader
                 {
                   //filterFileLines is name of the whole data be entered into the DB that is separated bt fixedColWidth
                     //-----,-----,----,------  --> Example of the filterFIleLines
-                    IList<string> filterFileLines = FilterData(singleFileFullData.ToArray(), separator);
+                    IList<string> filterFileLines = FilterData(singleFileFullData.ToArray(), separator,firstIterationIncrement, consuctiveIterationIncrement);
                     Util.PrintMessage("File reading completed ...");
                     if (filterFileLines.Count > 0)
                     {
@@ -74,6 +44,10 @@ namespace DataLoader
                             
                             allLinesColValues.Add(ParseColValues(line));
                         }
+                    }
+                    else
+                    {
+                        Util.PrintMessage("No data to process into database");
                     }
                 }
             }
@@ -87,40 +61,51 @@ namespace DataLoader
         }
 
 
-        private IList<string> FilterData(string[] fullData, string separator) //To get only relevant data i.e. data to be inserted
+        private IList<string> FilterData(string[] fullData, string separator,int firstIterationIncrement, int consuctiveIterationIncrement) //To get only relevant data i.e. data to be inserted
         {
             fixedColLength.Clear();
-
             IList<string> extractedData = new List<string>();
+            bool isFirstTime = true;
             //i represents number of lines in a file which is names as fullData.
             for (int i = 0; i < fullData.Length; ++i)
             {
-
-                if (!string.IsNullOrEmpty(fullData[i]))
+                if (!string.IsNullOrEmpty(fullData[i].Trim()))
                 {
-
                     if (fullData[i].Contains("End of Report"))
                         break;
-
+                    
                     int separatorIdx = fullData[i].IndexOf(separator);
                     if (separatorIdx == 0 || separatorIdx == 1) //To consider both KE001 & FFKE001  
                     {
-                        i += 5;
-                        if (fixedColLength.Count == 0 && fullData.Length >= (i - 1))
-                        {
-                            //fixedColLength.AddRange(fullData[i - 1].Split(' '));
-                            fixedColLength.AddRange(fullData[i - 1].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
+                        int increment = (isFirstTime ? firstIterationIncrement : consuctiveIterationIncrement);
+                        isFirstTime = false;
 
+                        if (IsEndOfReport(fullData, i + 1, increment))
+                            break;
+                        i += (increment - 1); // adding -1 because for loop again increment the i value.
+                        if (fixedColLength.Count == 0 && fullData.Length >= i)
+                        {
+                            fixedColLength.AddRange(fullData[i].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries));
                         }
                     }
-                    if (fullData.Length <= i)
-                        break;
-
-                    if (!string.IsNullOrEmpty(fullData[i].Trim()))
+                    else
+                    {
                         extractedData.Add(fullData[i]);
+                    }
                 }
             }
             return extractedData;
+        }
+
+        private bool IsEndOfReport(string[] fullData, int startIdx, int endIdx)
+        { 
+            while(startIdx < endIdx)
+            {
+                if (!string.IsNullOrEmpty(fullData[startIdx]) && fullData[startIdx].Contains("End of Report"))
+                    return true;
+                ++startIdx;
+            }
+            return false;
         }
 
         private string[] ParseColValues(string lineData)

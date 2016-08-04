@@ -8,11 +8,12 @@ namespace DataLoader
 {
     public class DBHandler
     {
+        private const string FiscalMonthQuery = "select dbo.FiscalMonth() As FiscalMonth;";
         internal void InsertIntoAseanSalesRegister(IList<string[]> rows)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("InsertASEAN_Sales_Register", con))
+                using (SqlCommand cmd = new SqlCommand("ASEAN_Sales_RegisterInsert", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -286,14 +287,20 @@ namespace DataLoader
             
         }
 
-        internal void CallNonQuerySP(string sprocName, int commandTimeOut = 30)
+        internal void CallNonQuerySP(string sprocName, int commandTimeOut = 30,IList<SqlParameter> sqlParams=null)
         {
             using (SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ERPConnectionString"].ConnectionString))
             
             {
                 using (SqlCommand cmd = new SqlCommand(sprocName, con))
                 {
+                    if (sqlParams != null)
+                    {
+                        foreach (SqlParameter param in sqlParams)
+                            cmd.Parameters.Add(param);
+                    }
                     cmd.CommandTimeout = commandTimeOut;
+                    
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -301,6 +308,10 @@ namespace DataLoader
             }
         }
 
+        internal string GetFiscalMonth()
+        {
+            return ExecuteQuery(FiscalMonthQuery).Rows[0][0].ToString();
+        }
 
         internal int GetMaxPaymentVoucherConflictID()
         {
@@ -338,7 +349,7 @@ namespace DataLoader
 
         internal DataTable GetEmailId(string groupName)
         {
-            string query = string.Format("select GD.CommGroupDtlId,GD.CommGroupId,GD.ToCC,GD.EmailId,Phone,CommGroupName from  CommGroupDetails as GD left join CommGroupMaster as GM on gd.CommGroupId=GM.CommGroupId where GM.CommGroupName='{0}'",groupName);
+            string query = string.Format(ConfigurationManager.AppSettings["RetrieveEmailQuery"], groupName);
             DataTable emailDataTable = ExecuteQuery(query);
             return emailDataTable;
         }
