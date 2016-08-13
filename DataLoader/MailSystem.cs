@@ -32,7 +32,7 @@ namespace DataLoader
             try
             {
 
-                mailMessage.From = new MailAddress("info@aranyaproject.com");
+                mailMessage.From = new MailAddress("India-fr.helpdesk@ap.averydennison.com");
                 
                 AssignEmail(mailMessage.To, emailTo);
                 AssignEmail(mailMessage.CC, emailToCC);

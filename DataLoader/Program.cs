@@ -8,7 +8,7 @@ namespace DataLoader
         
         static void Main(string[] args)
         {
-            args = new string[] { "AseanSales" };
+           // args = new string[] { "AseanSales" };
             Program program = new Program();
             Util.EnvironmentInfo = GetEnvironemtInfo(args[0]);
             Util.PrintMessage("******************************************************************************", false);

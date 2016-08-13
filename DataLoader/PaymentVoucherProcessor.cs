@@ -31,8 +31,7 @@ namespace DataLoader
 
             try
             {
-                if (dt != null && dt.Rows.Count > 0)
-                {
+
                     IList<string> emailTo =new List<string>();
                     IList<string> emailToCC= new List<string>();
                    // Util.PrintMessage("Preparing to send emails");
@@ -48,9 +47,9 @@ namespace DataLoader
                             emailToCC.Add(row["EmailId"].ToString());
                         }
                     }
-                   mailSystem.SendEmail(emailTo,emailToCC, "Details of Today's Duplicate Vouchers", mailSystem.ConvertDT2HTMLString(dt));
+                   string msgBody=dt != null && dt.Rows.Count > 0? mailSystem.ConvertDT2HTMLString(dt):"No duplicate Vouchers to send";
+                   mailSystem.SendEmail(emailTo,emailToCC, "Details of Today's Duplicate Vouchers",msgBody);
                    Util.PrintMessage("Emails Send!!!!");
-                }
             }
             catch (Exception ex)
             {

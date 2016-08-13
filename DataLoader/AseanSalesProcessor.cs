@@ -34,6 +34,11 @@ namespace DataLoader
             {
                 Util.PrintMessage("Starting execution of GetFiscalMonth()  ...");
                 fiscalMonth = dbHandler.GetFiscalMonth();
+                if (string.IsNullOrEmpty(fiscalMonth))
+                {
+                    Util.PrintMessage("Fiscal Month could not be found and is empty....", true, null);
+                    return;
+                }
                 Util.PrintMessage("Completed execution of GetFiscalMonth()  ...");
                 ExecuteSproc("ASEAN_UpdateSalesRegisterNew", fiscalMonth);
                 ExecuteSproc("ASEAN_Insert_SalesSummaryNew", fiscalMonth);

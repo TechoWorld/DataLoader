@@ -280,7 +280,7 @@ namespace DataLoader
 
         internal int CallSPAPDuplicateVouchersDaily()
         {
-            return 0;
+            //return 0;
             int maxConflictno = GetMaxPaymentVoucherConflictID();
             CallNonQuerySP("SP_APDuplicateVouchersDaily", 60);
             return maxConflictno;
